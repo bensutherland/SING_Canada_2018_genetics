@@ -2,3 +2,8 @@
 *.vcf
 *~
 *.aln
+*.Rhistory
+*.txt
+*.csv
+*.pdf
+

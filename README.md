@@ -44,4 +44,5 @@ Keeps 4 of 111 sites.
 
 (#todo: using the -m flag in msa2vcf allows haploid data, but will this be compatible to downstream?)
 
-
+### 3. Generate stats on data (Fst)
+Use the Rscript `01_scripts/vcf_to_hfstat.R` to perform some stats on the data as well as generating an Fst value. 

@@ -42,7 +42,15 @@ Use VCFtools to filter the VCF and only keep sites that are present at least fou
 `vcftools --vcf 03_vcf/aln.vcf --recode --maf 0.023 --out 03_vcf/aln_maf`     
 Keeps 4 of 111 sites.   
 
+Note that one of these kept sites, at 282 bp, there is a tri-allelic haplotype. This will be filtered out.    
+The SNPs with the highest MAF are at 300 and 400 bp, particularly the 400 bp polymorphism has the highest MAF. Remember that these are all in *tight physical linkage* so technically we should only be using a single marker per Fst evaluation. In this case, there are only three markers retained, and so this is probably fine to just keep together. If necessary, we could just retain the highest MAF polymorphism.       
+
 (#todo: using the -m flag in msa2vcf allows haploid data, but will this be compatible to downstream?)
 
 ### 3. Generate stats on data (Fst)
-Use the Rscript `01_scripts/vcf_to_hfstat.R` to perform some stats on the data as well as generating an Fst value. 
+Use the Rscript `01_scripts/vcf_to_hfstat.R` to turn the vcf into a genlight file, then assign population names to the samples based on sample names, plot a neighbour-joining tree, translate the data to hierfstat format and calculate Fst. This will also produce a graph of sample size per population.    
+Outputs include:    
+* `04_results/njt.pdf` (neighbour-joining tree)
+* `04_results/sample_size_per_pop.pdf` (barplot of sample sizes)
+* `04_results/all_data_wcfst.csv` (Weir Cockerham Fst)
+* `04_results/fst_nboot_<#bootstraps>.csv` (WC Fst with bootstraps for significance)

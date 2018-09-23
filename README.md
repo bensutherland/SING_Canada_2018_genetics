@@ -44,8 +44,8 @@ Keeps 4 of 111 sites.
 
 Note that one of these kept sites, at 282 bp, there is a tri-allelic haplotype. This will be filtered out.    
 The SNPs with the highest MAF are at 300 and 400 bp, particularly the 400 bp polymorphism has the highest MAF. Remember that these are all in *tight physical linkage* so technically we should only be using a single marker per Fst evaluation. In this case, there are only three markers retained, and so this is probably fine to just keep together. If necessary, we could just retain the highest MAF polymorphism.       
-
-(#todo: using the -m flag in msa2vcf allows haploid data, but will this be compatible to downstream?)
+In fact, if there was an option to do error correction to prevent false-positive polymorphisms on this data, the entire marker itself should be treated as a haplotype marker and this could be used as a single marker input for Fst evaluation.      
+In any case, the results provided here most likely provide the same answer as that would be obtained from such an analysis.    
 
 ### 3. Generate stats on data (Fst)
 Use the Rscript `01_scripts/vcf_to_hfstat.R` to turn the vcf into a genlight file, then assign population names to the samples based on sample names, plot a neighbour-joining tree, translate the data to hierfstat format and calculate Fst. This will also produce a graph of sample size per population.    

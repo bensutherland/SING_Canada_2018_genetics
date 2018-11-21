@@ -47,7 +47,7 @@ hist(myFreq, proba=T, col="gold", xlab = "Allele frequencies"
      , main = "Distribution of (second) allele frequencies"
      , ylim = c(0,50)
 )
-text(x = 0.4, y = 7, labels = paste(nLoc(my.data), " loci", sep = "" ))
+text(x = 0.4, y = 30, labels = paste(nLoc(my.data.gl), " loci", sep = "" ))
 temp <- density(myFreq)
 lines(temp$x, temp$y, lwd=3)
 
@@ -87,7 +87,7 @@ class(lD[[1]]) # lD is a list of distance matrices bw pairs of indiv
 D <- Reduce("+", lD)
 
 # Plot a neighbor-joining tree using ape's nj function on the distance matrix
-pdf(file = "04_results/njt.pdf", width = 7, height = 5)
+pdf(file = "04_results/njt.pdf", width = 9, height = 6.5)
 par(mar=c(4,3,5,3))
 plot(nj(D), type="fan", cex=0.3)
 dev.off()
@@ -134,10 +134,6 @@ table(nAll(my.data.gid))
 # Change from genind to hierfstat
 all.data.hf <- genind2hierfstat(my.data.gid)
 rownames(all.data.hf) <- indNames(my.data.gid)
-
-# # Remove the LITTLENECKCLAM from RUSSELL POP
-# all.data.hf <- all.data.hf[-64,]
-# rownames(all.data.hf)
 
 # Pairwise Fst
 pairwise.wc.fst <- pairwise.WCfst(all.data.hf)

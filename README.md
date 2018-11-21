@@ -19,31 +19,28 @@ Check java:
 multiple sequence alignment file (msa)    
 
 ### 1. Prepare alignment file into a VCF
-Put the .aln file into `02_raw_data`.        
-
-Remove the individuals of the other species:    
-`grep -vE 'LITTLENECK' 02_raw_data/butter__littleneck_clam_up.aln > 02_raw_data/butterclam.aln`
+Put the .aln file into `02_raw_data`. In this example, the file is entitled `BaynesSouthern_Butter.aln`          
 
 Move from the sequence alignment file into a vcf file (provide path to msa2vcf)    
-`cat 02_raw_data/butterclam.aln | /Users/wayne/programs/jvarkit/dist/msa2vcf > 03_vcf/aln.vcf`
+`cat 02_raw_data/butterclam.aln | /Users/wayne/programs/jvarkit/dist/msa2vcf --allsites > 03_vcf/aln.vcf`
+The inclusion of `--allsites` is important as it will give you readouts for all loci.   
 
 ### 2. Filter the VCF
 How many SNPs were identified before filtering?
 `grep -vE '^#' 03_vcf/aln.vcf | wc -l`
-111 sites are viewed in the vcf.   
+111 sites are viewed in the vcf. (note this will not work with the --allsites flag, as it will include all loci in the VCF.      
 
 And how many samples?    
 `grep '|' 02_raw_data/butterclam.aln  | awk '{ print $1}' - | sort -n | uniq  | wc -l`    
-85 samples are present in the vcf after removing the other species.   
+84 samples are present in the vcf after removing the other species.   
 
-With this dataset, there are 85 individual samples. If we want to make sure that at least 2 individuals have the SNP, then require 4 copies (because this is a diploid VCF with a haploid dataset, each individual is represented by 2 copies).  
+With this dataset, there are 84 individual samples. If we want to make sure that at least 2 individuals have the SNP, then require 4 copies (because this is a diploid VCF with a haploid dataset, each individual is represented by 2 copies).  
 
-Use VCFtools to filter the VCF and only keep sites that are present at least four times (2 individuals). For our data, this would equate to a minor allele frequency filter (MAF) of 4 / (85 * 2) = 0.0235 (or MAF > 0.02).   
-`vcftools --vcf 03_vcf/aln.vcf --recode --maf 0.023 --out 03_vcf/aln_maf`     
+Use VCFtools to filter the VCF and only keep sites that are present at least four times (2 individuals). For our data, this would equate to a minor allele frequency filter (MAF) of 4 / (84 * 2) = 0.0238 (or MAF > 0.02).   
+`vcftools --vcf 03_vcf/aln.vcf --recode --maf 0.024 --out 03_vcf/aln_maf`     
 Keeps 4 of 111 sites.   
 
-Note that one of these kept sites, at 282 bp, there is a tri-allelic haplotype. This will be filtered out.    
-The SNPs with the highest MAF are at 300 and 400 bp, particularly the 400 bp polymorphism has the highest MAF. Remember that these are all in *tight physical linkage* so technically we should only be using a single marker per Fst evaluation. In this case, there are only three markers retained, and so this is probably fine to just keep together. If necessary, we could just retain the highest MAF polymorphism.       
+The SNPs with the highest MAF is at 400 bp, but remember that these are all in *tight physical linkage* so technically we should only be using a single marker per Fst evaluation. In this case, there are only five markers retained, and so this is probably fine to just keep together. If necessary, we could just retain the highest MAF polymorphism.       
 In fact, if there was an option to do error correction to prevent false-positive polymorphisms on this data, the entire marker itself should be treated as a haplotype marker and this could be used as a single marker input for Fst evaluation.      
 In any case, the results provided here most likely provide the same answer as that would be obtained from such an analysis.    
 

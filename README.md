@@ -22,7 +22,7 @@ multiple sequence alignment file (msa)
 Put the .aln file into `02_raw_data`. In this example, the file is entitled `BaynesSouthern_Butter.aln`          
 
 Move from the sequence alignment file into a vcf file (provide path to msa2vcf)    
-`cat 02_raw_data/butterclam.aln | /Users/wayne/programs/jvarkit/dist/msa2vcf --allsites > 03_vcf/aln.vcf`
+`cat 02_raw_data/BaynesSouthern_Butter.aln | /Users/wayne/programs/jvarkit/dist/msa2vcf --allsites > 03_vcf/aln.vcf`
 The inclusion of `--allsites` is important as it will give you readouts for all loci.   
 
 ### 2. Filter the VCF
